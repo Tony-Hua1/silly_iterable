@@ -30,6 +30,10 @@ public:
 	public:
 		Iterator(long curr_year) : curr_year(curr_year) {}
 
+		bool operator<=(const Iterator& other) const {
+			return curr_year <= other.curr_year;
+		}
+
 		bool operator!=(const Iterator& other) const {
 			return curr_year != other.curr_year;
 		}
@@ -44,15 +48,15 @@ public:
 		}
 	};
 
-	LeapYears() : LeapYears(2022) {} // today's date
+	LeapYears() : LeapYears(2024) {} // upcoming leap year
 
 	LeapYears(long max_year) {
 		for (; !is_leap_year(max_year); --max_year);
-		this->max_year = max_year;
+			this->max_year = max_year;
 	}
 
 	Iterator begin() const {
-		return Iterator(1904);
+		return Iterator(1904); // first leap year of twentieth century
 	}
 
 	Iterator end() const {
@@ -78,13 +82,13 @@ void unit_test_leap_years_iterator() {
 	vector<int> expected;
 	vector<int> actual;
 
-	for (int i = 1904; i < 2022; ++i) {
+	for (int i = 1904; i != 2024; ++i) { // first leap year of twentieth century to next upcoming leap year
 		if (is_leap_year(i)) {
 			expected.push_back(i);
 		}
 	}
 
-	for (long x : LeapYears(2022)) {
+	for (long x : LeapYears(2024)) {
 		actual.push_back(x);
 	}
 
@@ -94,30 +98,6 @@ void unit_test_leap_years_iterator() {
 }
 
 int main() {
-	// for (int i = 1900; i < 2022; ++i) {
-	// 	if (is_leap_year(i)) {
-	// 		cout << i << endl;
-	// 	}
-	// }
-
-	// for (long x : LeapYears(2022)) {
-	// 	cout << x << endl;
-	// }
-
-	// LeapYears x;
-	// for (auto it = x.begin(); it != x.end(); ++it) {
-	// 	cout << *it << endl;
-	// }
-
-	// vector<int> a;
-	// for (int i = 0; i < 10; ++i) {
-	// 	a.push_back(i);
-	// }
-	
-	// for (int x : a) {
-	// 	cout << x << endl;
-	// }
-
 	try {
 		unit_test_leap_years_iterator();
 		cout << "All unit tests passed!\n";
